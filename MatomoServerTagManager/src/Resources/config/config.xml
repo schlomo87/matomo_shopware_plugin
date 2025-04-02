@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/shopware/platform/trunk/src/Core/System/SystemConfig/Schema/config.xsd">
+    <card>
+        <title>Matomo Tracking Settings</title>
+        <title lang="de-DE">Matomo Tracking Einstellungen</title>
+        <input-field type="checkbox">
+            <name>matomoTrackingActive</name>
+            <label>Activate Matomo Tracking</label>
+            <label lang="de-DE">Matomo Tracking aktivieren</label>
+            <helpText>If set, Matomo tracking is implemented with the stored container URL in the &lt;head&gt; tag.</helpText>
+            <helpText lang="de-DE">Wenn gesetzt, wird das Matomo Tracking mit der hinterlegten Container URL im &lt;head&gt;-Tag implementiert.</helpText>
+            <defaultValue>false</defaultValue>
+        </input-field>
+        <input-field type="text">
+            <name>matomoTrackingUrl</name>
+            <label>Tracking URL</label>
+            <label lang="de-DE">Tracking URL</label>
+            <placeholder>//tracking.clp.de/</placeholder>
+            <required>false</required>
+        </input-field>
+        <input-field type="text">
+            <name>matomoSiteId</name>
+            <label>Matomo Website ID</label>
+            <label lang="de-DE">Matomo Website ID</label>
+            <placeholder>1</placeholder>
+            <required>false</required>
+        </input-field>
+        <input-field type="text">
+            <name>matomoApiKey</name>
+            <label>Matomo API Key</label>
+            <label lang="de-DE">Matomo API Key</label>
+            <placeholder>API-XXXX-XXXX-XXXX-XXXX</placeholder>
+            <required>false</required>
+        </input-field>
+        <input-field type="text">
+            <name>setExcludedReferrers</name>
+            <label>Excluded Referrers</label>
+            <label lang="de-DE">Referrers ausschließen</label>
+            <placeholder>payments.amazon.de, pay.klarna.com</placeholder>
+            <required>false</required>
+        </input-field>
+    </card>
+    <card>
+        <title>Matomo Event Tracking</title>
+        <title lang="de-DE">Matomo Event Tracking</title>
+        <input-field type="checkbox">
+            <name>matomoEventTrackingActive</name>
+            <label>Activate Matomo Event Tracking</label>
+            <label lang="de-DE">Matomo Event Tracking aktivieren</label>
+            <helpText>If set, event tracking is executed for category, product calls, etc.</helpText>
+            <helpText lang="de-DE">Wenn gesetzt, wird das Event-Tracking bei Kategorie-, Produkt-Aufrufen, etc. ausgeführt</helpText>
+            <defaultValue>false</defaultValue>
+        </input-field>
+    </card>
+    <card>
+        <title>Matomo E-Commerce Tracking</title>
+        <title lang="de-DE">Matomo E-Commerce Tracking</title>
+        <input-field type="checkbox">
+            <name>matomoEcommerceTrackingActive</name>
+            <label>Activate Matomo E-Commerce Tracking</label>
+            <label lang="de-DE">Matomo E-Commerce Tracking aktivieren</label>
+            <helpText>If set, e-commerce tracking is executed.</helpText>
+            <helpText lang="de-DE">Wenn gesetzt, wird das E-Commerce-Tracking ausgeführt</helpText>
+            <defaultValue>false</defaultValue>
+        </input-field>
+    </card>
+</config>

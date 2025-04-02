@@ -1,0 +1,42 @@
+{
+    "name": "swclp/matomo-server-tag-manager",
+    "description": "swclp/matomo-server-tag-manager",
+    "type": "shopware-platform-plugin",
+    "version": "1.9.6",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Sebastian Grothe"
+        }
+    ],
+    "require": {
+        "shopware/core": "~6.6.0"
+    },
+    "extra": {
+        "shopware-plugin-class": "SwClp\\MatomoServerTagManager\\MatomoServerTagManager",
+        "label": {
+            "de-DE": "Matomo Tag Manager Tracking",
+            "en-GB": "Matomo Tag Manager Tracking"
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "SwClp\\MatomoServerTagManager\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "SwClp\\MatomoServerTagManager\\Tests\\": "tests/"
+        }
+    },
+    "scripts": {
+        "post-install-cmd": [
+            "@composer install-assets",
+            "@composer compile-themes"
+        ],
+        "install-assets": "php bin/console assets:install",
+        "compile-themes": "php bin/console theme:compile",
+        "build": "NODE_ENV=production webpack --config webpack.config.js",
+        "postbuild": "cp -r src/Resources/app/storefront/dist/* src/Resources/public/js/ && cp generated/css/* src/Resources/public/css/"
+    }
+}

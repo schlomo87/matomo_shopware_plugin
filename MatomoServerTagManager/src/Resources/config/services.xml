@@ -1,0 +1,116 @@
+<?xml version="1.0" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <services>
+        <!-- MatomoConfigService -->
+        <service id="SwClp\MatomoServerTagManager\Service\MatomoConfigService">
+            <argument type="service" id="Shopware\Core\System\SystemConfig\SystemConfigService"/>
+        </service>
+
+        <!-- CategoryHandlerService -->
+        <service id="SwClp\MatomoServerTagManager\Service\CategoryHandlerService">
+            <argument type="service" id="request_stack"/>
+            <argument type="service" id="logger"/>
+            <tag name="monolog.logger" channel="matomo"/>
+        </service>
+
+        <!-- MatomoBaseTrackerService -->
+        <service id="SwClp\MatomoServerTagManager\Service\MatomoBaseDataTrackerService">
+            <argument type="service" id="SwClp\MatomoServerTagManager\Service\MatomoConfigService"/>
+            <argument type="service" id="logger"/>
+            <argument type="service" id="order.repository"/>
+            <tag name="monolog.logger" channel="matomo_server_tag_manager"/>
+        </service>
+
+        <!-- TrackingDataCollectionService -->
+        <service id="SwClp\MatomoServerTagManager\Service\TrackingDataCollectionService" public="true">
+            <argument type="service" id="slugify"/>
+        </service>
+
+        <!-- RequestDataExtractor ohne Abhängigkeiten -->
+        <service id="SwClp\MatomoServerTagManager\Service\RequestBaseDataExtractor">
+            <argument type="service" id="SwClp\MatomoServerTagManager\Service\MatomoConfigService"/>
+            <argument type="service" id="logger"/>
+            <tag name="monolog.logger" channel="matomo"/>
+        </service>
+
+        <!-- BaseSubscriber -->
+        <service id="SwClp\MatomoServerTagManager\Subscriber\MatomoBaseDataTracking">
+            <argument type="service" id="Shopware\Core\System\SystemConfig\SystemConfigService"/>
+            <argument type="service" id="SwClp\MatomoServerTagManager\Service\RequestBaseDataExtractor"/>
+            <argument type="service" id="SwClp\MatomoServerTagManager\Service\MatomoBaseDataTrackerService"/>
+            <argument type="service" id="logger"/>
+            <argument type="service" id="SwClp\MatomoServerTagManager\Service\TrackingDataCollectionService"/>
+            <tag name="kernel.event_subscriber"/>
+            <tag name="monolog.logger" channel="matomo"/>
+        </service>
+
+        <!-- CategorySubscriber -->
+        <service id="SwClp\MatomoServerTagManager\Subscriber\MatomoCategoryDataTracking">
+            <argument type="service" id="logger"/>
+            <argument type="service" id="SwClp\MatomoServerTagManager\Service\MatomoConfigService"/>
+            <argument type="service" id="SwClp\MatomoServerTagManager\Service\CategoryHandlerService"/>
+            <argument type="service" id="request_stack"/>
+            <argument type="service" id="SwClp\MatomoServerTagManager\Service\TrackingDataCollectionService"/>
+            <tag name="kernel.event_subscriber"/>
+            <tag name="monolog.logger" channel="matomo"/>
+        </service>
+
+        <!-- ProductSubscriber -->
+        <service id="SwClp\MatomoServerTagManager\Subscriber\MatomoProductDataTracking">
+            <argument type="service" id="logger"/>
+            <argument type="service" id="SwClp\MatomoServerTagManager\Service\MatomoConfigService"/>
+            <argument type="service" id="request_stack"/>
+            <argument type="service" id="category.repository"/>
+            <argument type="service" id="SwClp\MatomoServerTagManager\Service\CategoryHandlerService"/>
+            <argument type="service" id="SwClp\MatomoServerTagManager\Service\TrackingDataCollectionService"/>
+            <tag name="kernel.event_subscriber"/>
+            <tag name="monolog.logger" channel="matomo"/>
+        </service>
+
+        <!-- SearchSubscriber -->
+        <service id="SwClp\MatomoServerTagManager\Subscriber\MatomoSearchDataTracking">
+            <argument type="service" id="logger"/>
+            <argument type="service" id="SwClp\MatomoServerTagManager\Service\MatomoConfigService"/>
+            <argument type="service" id="request_stack"/>
+            <argument type="service" id="SwClp\MatomoServerTagManager\Service\TrackingDataCollectionService"/>
+            <tag name="kernel.event_subscriber"/>
+            <tag name="monolog.logger" channel="matomo"/>
+        </service>
+
+        <!-- CartSubscriber -->
+        <service id="SwClp\MatomoServerTagManager\Subscriber\MatomoCartDataTracking">
+            <argument type="service" id="logger"/>
+            <argument type="service" id="SwClp\MatomoServerTagManager\Service\MatomoConfigService"/>
+            <argument type="service" id="request_stack"/>
+            <argument type="service" id="SwClp\MatomoServerTagManager\Service\CategoryHandlerService"/>
+            <argument type="service" id="SwClp\MatomoServerTagManager\Service\MatomoBaseDataTrackerService"/>
+            <argument type="service" id="SwClp\MatomoServerTagManager\Service\RequestBaseDataExtractor"/>
+            <tag name="kernel.event_subscriber"/>
+            <tag name="monolog.logger" channel="matomo"/>
+        </service>
+
+        <!-- OrderSubscriber -->
+        <service id="SwClp\MatomoServerTagManager\Subscriber\MatomoOrderDataTracking">
+            <argument type="service" id="logger"/>
+            <argument type="service" id="SwClp\MatomoServerTagManager\Service\MatomoConfigService"/>
+            <argument type="service" id="request_stack"/>
+            <argument type="service" id="SwClp\MatomoServerTagManager\Service\CategoryHandlerService"/>
+            <argument type="service" id="SwClp\MatomoServerTagManager\Service\TrackingDataCollectionService"/>
+            <argument type="service" id="order.repository"/>
+            <tag name="kernel.event_subscriber"/>
+        </service>
+
+        <!-- ResolutionController -->
+        <service id="SwClp\MatomoServerTagManager\Controller\ResolutionController" public="true">
+            <call method="setContainer">
+                <argument type="service" id="service_container"/>
+            </call>
+            <tag name="controller.service_arguments"/>
+        </service>
+
+    </services>
+</container>
